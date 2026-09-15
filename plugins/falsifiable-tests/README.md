@@ -66,7 +66,7 @@ python3 scripts/mutate.py --project . --spec mutations.json \
 ```
 
 It edits the real file, runs the real command, restores from a hash-checked backup,
-re-runs the suite on the restored tree, and reports which tests noticed each mutation,
+re-runs the suite on the restored tree, bounds each run with `--timeout`, and reports which tests noticed each mutation,
 which mutations nothing caught, and which mutations only broke the plumbing (not
 counted as catches). Any suite that emits JUnit XML gets per-test resolution.
 
@@ -85,6 +85,7 @@ counted as catches). Any suite that emits JUnit XML gets per-test resolution.
 | `.../references/audit.md` | whole-suite audit procedure and report template |
 | `.../scripts/mutate.py` | batch harness (language-agnostic, needs only a test command) |
 | `.../scripts/test_mutate.py` | the harness's own tests (`python3 -m pytest scripts/ -q`) |
+| `.../scripts/self-mutations.json` | defects planted in the harness by the upstream CI; every one must be caught |
 
 No commands, agents, hooks or MCP servers. Nothing runs without being invoked.
 
@@ -94,6 +95,11 @@ The method predates the skill: it is how the several hundred tests in
 [MCP-Bifrost](https://github.com/ArnauFerma/MCP-Bifrost) are written, each one observed
 red under a deliberate break before being trusted. The skill packages that practice so
 it can be installed instead of re-explained every session.
+
+## Case studies
+
+The method run against tenacity, tomlkit and click with the harness, findings offered
+upstream: https://github.com/ArnauFerma/falsifiable-tests/tree/main/case-studies
 
 ## What was measured
 
